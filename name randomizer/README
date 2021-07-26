@@ -1,0 +1,4 @@
+einfaches Programm, zum Durcheinanderbringen von Wörtern
+  1. Wort/Satz eingeben
+  2. Random -> Buchstaben werden je Wort durcheinandergebracht
+     Readable -> wie Random, aber erster und letzter Buchstabe jedes Worts bleibt gleich
