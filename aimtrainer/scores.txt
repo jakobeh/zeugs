@@ -1,0 +1,7 @@
+Highscores:
+
+Preset : EASY (Code: X/-O/-1/-10/-EASY)
+   1. Jopp: 14,7 Sekunden, am: Thu Dec 24 14:29:28 CET 2020
+   2. Jopp: 16,5 Sekunden, am: Thu Dec 24 14:31:00 CET 2020
+   3. Jopp: 23,0 Sekunden, am: Thu Dec 24 14:27:50 CET 2020
+
