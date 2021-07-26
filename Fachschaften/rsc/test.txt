@@ -1,0 +1,4 @@
+Jakob,true,Chemie,5,8,2,Chemie,Informatik,Geht,Geht nich,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht nich,Geht,Geht,Geht
+Lio,false,false,false,false,3,Sport,Deutsch,Englisch,Geht,Geht,Geht,Geht,Geht,Geht nich,Geht,Geht,Geht,Geht,Geht,Geht,Geht
+Lucian,false,false,false,false,2,Französisch,Italienisch,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht nich,Geht,Geht,Geht,Geht,Geht
+EmilP,true,Informatik,3,2,2,Ethik,Informatik,Geht,Geht,Geht,Geht nich,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht,Geht
