@@ -95,7 +95,7 @@ public class TTS {
 
 					ais.read(temp, 0, delta);
 
-					b.add((ByteBuffer) ByteBuffer.wrap(temp).flip());
+					b.add((ByteBuffer) ByteBuffer.wrap(temp));
 				}
 			}
 
