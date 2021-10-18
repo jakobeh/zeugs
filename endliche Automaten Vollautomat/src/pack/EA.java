@@ -38,6 +38,33 @@ public class EA {
 		matrix = newM;
 	}
 
+	public void removeZustand(Zustand z) {
+		if (!zustand.contains(z)) {
+			return;
+		}
+		int index = 0;
+		for (int i = 0; i < zustand.size(); i++) {
+			if (zustand.get(i) == z) {
+				index = i;
+			}
+		}
+		zustand.remove(index);
+		char[][][] newM = new char[matrix.length - 1][matrix.length - 1][];
+		int nexti = 0;
+		for (int i = 0; i < matrix.length; i++) {
+			int nextj = 0;
+			if (i != index) {
+				for (int j = 0; j < matrix.length; j++) {
+					if (j != index) {
+						newM[nexti][nextj] = matrix[i][j];
+						nextj++;
+					}
+				}
+				nexti++;
+			}
+		}
+	}
+
 	public void addPath(int from, int to, char[] chars) {
 		if (from >= zustand.size() || from < 0 || to >= zustand.size() || to < 0) {
 			return;
@@ -85,6 +112,10 @@ public class EA {
 
 	public ArrayList<Zustand> getZustand() {
 		return zustand;
+	}
+
+	public char[][][] getMatrix() {
+		return matrix;
 	}
 
 }
