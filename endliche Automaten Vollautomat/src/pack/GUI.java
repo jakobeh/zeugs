@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 	Rectangle[] hitbox;
 	int draggingArrowFrom = -1, draggingArrowTo = -1;
 
-	JButton bConfirm = null;
+	JButton bConfirm = null, bCancel = null;
 	JTextField jt = null;
 	JFrame jfPath = null;
 //	boolean[] drawing;
@@ -41,10 +42,12 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 		jf.setSize(1600, 900);
 		jf.setResizable(false);
 		jf.setLocationRelativeTo(null);
+		jf.setLayout(null);
 		jf.setVisible(true);
 		jf.setMenuBar(null);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.add(this);
+		setBounds(0, 0, jf.getWidth(), jf.getHeight());
 		jf.addMouseListener(this);
 
 //		hitbox = new Rectangle[] { new Rectangle(1400, 50, 120, 70), new Rectangle(1400, 170, 120, 70),
@@ -85,21 +88,25 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 
 		ArrayList<Zustand> zustand = ea.getZustand();
 		char[][][] matrix = ea.getMatrix();
+		System.out.println(matrix.length);
 		for (int i = 0; i < matrix.length; i++) {
+			System.out.println("-" + matrix[i].length);
 			for (int j = 0; j < matrix.length; j++) {
 				if (matrix[i][j] != null) {
 					Zustand z1 = zustand.get(i), z2 = zustand.get(j);
 					int x1 = (int) z1.getHitbox().getCenterX(), y1 = (int) z1.getHitbox().getCenterY(),
-							x2 = (int) z2.getHitbox().getCenterX(), y2 = (int) z2.getHitbox().getCenterY();
-					g.drawLine(x1, y1, x2, y2);
-					double h = Math.sin(3 * Math.atan((x2 - x1) / (y2 - y1))),
-							b = Math.cos(3 * Math.atan((x2 - x1) / (y2 - y1))),
-//							length = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)),
-							dx = 5 * Math.cos(Math.atan((x2 - x1) / (y2 - y1))) * ((x1 < x2) ? -1 : 1),
-							dy = 5 * Math.sin(Math.atan((x2 - x1) / (y2 - y1))) * ((x1 < x2) ? -1 : 1),
+							x2 = (int) z2.getHitbox().getCenterX(), y2 = (int) z2.getHitbox().getCenterY(),
 							mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
-					g.fillPolygon(new int[] { (int) (mx + dx), (int) (mx + b), (int) (mx - b) },
-							new int[] { (int) (mx + dy), (int) (my + h), (int) (my - h) }, 3);
+					g.drawLine(x1, y1, x2, y2);
+					g.drawString(Arrays.toString(matrix[i][j]), mx, my);
+//					double h = Math.sin(3 * Math.atan((x2 - x1) / (y2 - y1))),
+//							b = Math.cos(3 * Math.atan((x2 - x1) / (y2 - y1))),
+//							length = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)),
+//							dx = 5 * Math.cos(Math.atan((x2 - x1) / (y2 - y1))) * ((x1 < x2) ? -1 : 1),
+//							dy = 5 * Math.sin(Math.atan((x2 - x1) / (y2 - y1))) * ((x1 < x2) ? -1 : 1),
+//							mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+//					g.fillPolygon(new int[] { (int) (mx + dx), (int) (mx + b), (int) (mx - b) },
+//							new int[] { (int) (mx + dy), (int) (my + h), (int) (my - h) }, 3);
 				}
 			}
 		}
@@ -203,16 +210,22 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 							jfPath.setSize(400, 300);
 							jfPath.setVisible(true);
 							jfPath.requestFocus();
+							jfPath.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 							jfPath.setLayout(null);
 
 							bConfirm = new JButton("Confirm");
 							jfPath.add(bConfirm);
-							bConfirm.setBounds(10, 250, 380, 40);
+							bConfirm.setBounds(10, 200, 175, 40);
 							bConfirm.addActionListener(this);
+
+							bCancel = new JButton("Cancel");
+							jfPath.add(bCancel);
+							bCancel.setBounds(190, 200, 175, 40);
+							bCancel.addActionListener(this);
 
 							jt = new JTextField("a, b");
 							jfPath.add(jt);
-							jt.setBounds(10, 20, 380, 200);
+							jt.setBounds(10, 20, 360, 150);
 							jt.setVisible(true);
 						}
 
@@ -280,6 +293,12 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 			}
 
 			ea.addPath(draggingArrowFrom, draggingArrowTo, chars);
+			draggingArrowFrom = -1;
+			draggingArrowTo = -1;
+			jfPath.dispose();
+		}
+
+		if (e.getSource() == bCancel) {
 			draggingArrowFrom = -1;
 			draggingArrowTo = -1;
 			jfPath.dispose();
