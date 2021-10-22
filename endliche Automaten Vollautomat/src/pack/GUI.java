@@ -30,7 +30,7 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 	Rectangle[] hitbox;
 	int draggingArrowFrom = -1, draggingArrowTo = -1;
 
-	JButton bConfirm = null, bCancel = null;
+	JButton bConfirm = null, bConfirm1 = null, bCancel = null, bCheck = null;
 	JTextField jt = null;
 	JFrame jfPath = null;
 //	boolean[] drawing;
@@ -50,6 +50,11 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 		setBounds(0, 0, jf.getWidth(), jf.getHeight());
 		jf.addMouseListener(this);
 
+		bCheck = new JButton("Check word");
+		jf.add(bCheck);
+		bCheck.setBounds(1350, 600, 200, 50);
+		bCheck.addActionListener(this);
+
 //		hitbox = new Rectangle[] { new Rectangle(1400, 50, 120, 70), new Rectangle(1400, 170, 120, 70),
 //				new Rectangle(1395, 295, 130, 80), new Rectangle(1400, 420, 70, 60) };
 //		drawing = new boolean[4];
@@ -57,9 +62,9 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 
 	protected void paintComponent(Graphics g) {
 		g.setColor(new Color(128, 128, 128));
-		g.fillRect(1300, 0, 300, 900);
+		g.fillRect(1300, 0, 300, 500);
 		g.setColor(Color.BLACK);
-		g.drawRect(1300, 0, 300, 900);
+		g.drawRect(1300, 0, 300, 500);
 
 		g.setColor(new Color(200, 200, 200));
 		g.fillRoundRect(1400, 50, 120, 70, 20, 20);
@@ -298,10 +303,48 @@ public class GUI extends JLabel implements MouseListener, ActionListener {
 			jfPath.dispose();
 		}
 
+		if (e.getSource() == bConfirm1) {
+			String s = jt.getText();
+			boolean erg = ea.check(s);
+			System.out.println(s + " ist " + erg);
+			jt.setText(s + " ist " + erg);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			jfPath.dispose();
+		}
+
 		if (e.getSource() == bCancel) {
 			draggingArrowFrom = -1;
 			draggingArrowTo = -1;
 			jfPath.dispose();
+		}
+
+		if (e.getSource() == bCheck) {
+			jfPath = new JFrame("Wort überprüfen");
+			jfPath.setLocationRelativeTo(null);
+			jfPath.setSize(400, 300);
+			jfPath.setVisible(true);
+			jfPath.requestFocus();
+			jfPath.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			jfPath.setLayout(null);
+
+			bConfirm1 = new JButton("Confirm");
+			jfPath.add(bConfirm1);
+			bConfirm1.setBounds(10, 200, 175, 40);
+			bConfirm1.addActionListener(this);
+
+			bCancel = new JButton("Cancel");
+			jfPath.add(bCancel);
+			bCancel.setBounds(190, 200, 175, 40);
+			bCancel.addActionListener(this);
+
+			jt = new JTextField("wort");
+			jfPath.add(jt);
+			jt.setBounds(10, 20, 360, 150);
+			jt.setVisible(true);
 		}
 
 	}
